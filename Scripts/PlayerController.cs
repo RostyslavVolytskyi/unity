@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour, Controls.IPlayerActions
     public Transform shotSpawn;
 
     // for movement
-    public float movementSpeed;
+    public float forwardSpeed;
+    public float sideSpeed;
+
     bool isForward;
     bool isRight;
     bool isLeft;
@@ -26,23 +28,27 @@ public class PlayerController : MonoBehaviour, Controls.IPlayerActions
     private void FixedUpdate()
     {
         if (isForward == true) {
-            playerRb.AddForce(0, 0, movementSpeed * Time.deltaTime);
+            playerRb.AddForce(0, 0, forwardSpeed * Time.deltaTime, ForceMode.VelocityChange);
         }
         if (isBack == true)
         {
-            playerRb.AddForce(0, 0, -movementSpeed * Time.deltaTime);
+            playerRb.AddForce(0, 0, -forwardSpeed * Time.deltaTime, ForceMode.VelocityChange);
         }
         if (isRight == true)
         {
-            playerRb.AddForce(movementSpeed * Time.deltaTime, 0, 0);
+            playerRb.AddForce(sideSpeed * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
         if (isLeft == true)
         {
-            playerRb.AddForce(-movementSpeed * Time.deltaTime, 0, 0);
+            playerRb.AddForce(-sideSpeed * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
         if (isJump == true)
         {
             playerRb.velocity = new Vector3(playerRb.velocity.x, jumpHeight * Time.fixedDeltaTime, playerRb.velocity.z);
+        }
+        if(playerRb.position.y < -1)
+        {
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
 

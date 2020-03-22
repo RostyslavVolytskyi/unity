@@ -6,7 +6,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.collider.tag == "Obstacle")
         {
-            Debug.Log("Boom");
+            Debug.Log("collision!");
         }
     }
 }
